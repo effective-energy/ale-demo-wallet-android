@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Platform, StyleSheet, Text, View } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
 
+import { Provider } from "mobx-react";
+import stores from "./src/store";
+
 import Login from './src/components/Login';
 import RecoverAccount from './src/components/RecoverAccount';
 import CreateAccount from './src/components/CreateAccount';
@@ -39,7 +42,9 @@ type Props = {};
 export default class App extends Component<Props> {
     render() {
         return (
-            <RootStack />
+            <Provider {...stores}>
+                <RootStack/>
+            </Provider>
         );
     }
 }

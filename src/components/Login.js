@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Alert, Dimensions, TextInput, StatusBar, TouchableOpacity, ActivityIndicator, ScrollView, Keyboard } from 'react-native';
 import { CachedImage } from "react-native-img-cache";
+import { observer, inject } from 'mobx-react/native';
+import { when } from "mobx";
 
 function wp (percentage) {
     const value = (percentage * viewportWidth) / 100;
     return Math.round(value);
 }
 
+function validateEmail(email) {
+    let re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
 const { width: viewportWidth } = Dimensions.get('window');
 let screenWidth = wp(80);
 
 type Props = {};
-export default class Login extends Component<Props> {
+export default @inject("userStore") @observer class Login extends Component<Props> {
     constructor(props) {
         super(props);
         this.state = {
@@ -27,6 +34,17 @@ export default class Login extends Component<Props> {
         };
     };
 
+    watcher = when(() => this.props.userStore.isLogin === true, () => {
+        this.props.navigation.navigate('Wallets');
+    });
+
+    // watcher = when(() => this.props.userStore.isTwoFactor === true, () => {
+    //     this.props.navigation.navigate('TwoFactorLogin', {
+    //         email: this.state.userEmail,
+    //         password: this.state.userPassword
+    //     });
+    // });
+
     createAccount() {
         this.props.navigation.navigate('CreateAccount');
     }
@@ -36,7 +54,6 @@ export default class Login extends Component<Props> {
     }
 
     login() {
-        return this.props.navigation.navigate('Wallets');
         if (this.state.userEmail.length === 0) {
             return Alert.alert('Enter your E-mail');
         }
@@ -89,7 +106,7 @@ export default class Login extends Component<Props> {
                             onChangeText={(userPassword) => this.setState({userPassword})}
                             value={this.state.userPassword}
                             returnKeyType={"go"}
-                            onSubmitEditing={() => { this.loginToWallet() }}
+                            onSubmitEditing={() => { this.login() }}
                         />
                     </View>
                     <TouchableOpacity
@@ -102,6 +119,11 @@ export default class Login extends Component<Props> {
                         />
                         <Text style={styles.loginText}>Login to wallet</Text>
                     </TouchableOpacity>
+                    {
+                        this.props.userStore.isLoader ?
+                            <ActivityIndicator size="large" color="#CCCCCC" style={{marginTop: 20}} />
+                            : null
+                    }
                 </View>
                 <View style={styles.bottomInfo}>
                     <TouchableOpacity

@@ -1,6 +1,5 @@
 import React from 'react';
 import { StyleSheet, Text, View, Dimensions, TouchableHighlight, TouchableOpacity } from 'react-native';
-import isIphoneX from '../../config/isIphoneX';
 import Carousel from 'react-native-snap-carousel';
 import { CachedImage } from "react-native-img-cache";
 
@@ -21,33 +20,7 @@ const sliderWidth = viewportWidth;
 export default class WalletsSlider extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            data: [{
-                "_id": "1",
-                "name": "Wallet 1",
-                "balance": 1250,
-                "address":"RBW0fAGrhgNbXXyOHZWdDLNtMNuPx0HrHjNqvryBwBwBqOD",
-                "total_transactions": 13
-            }, {
-                "_id": "1",
-                "name": "Wallet 2",
-                "balance": 2250,
-                "address":"RBW0fAGrhgNbXXyOHZWdDLNtMNuPx0HrHjNqvryBwBwBqO1",
-                "total_transactions": 13
-            }, {
-                "_id": "1",
-                "name": "Wallet 3",
-                "balance": 3250,
-                "address":"RBW0fAGrhgNbXXyOHZWdDLNtMNuPx0HrHjNqvryBwBwBqO2",
-                "total_transactions": 13
-            }, {
-                "_id": "1",
-                "name": "Wallet 4",
-                "balance": 4250,
-                "address":"RBW0fAGrhgNbXXyOHZWdDLNtMNuPx0HrHjNqvryBwBwBqO2",
-                "total_transactions": 13
-            }]
-        };
+        this.state = {};
     }
 
     _renderItem ({item}) {
@@ -112,7 +85,7 @@ export default class WalletsSlider extends React.Component {
                     layoutCardOffset={50}
                     hasParallaxImages={true}
                     containerCustomStyle={styles.walletsSlider_container_custom}
-                    data={this.state.data}
+                    data={this.props.walletsList}
                     renderItem={item => this._renderItem(item)}
                     sliderWidth={sliderWidth}
                     itemWidth={itemWidth}
@@ -129,7 +102,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
     },
     walletsSlider_container_custom: {
-        marginTop: isIphoneX === true ? 30 : 20,
+        marginTop: 20,
         overflow: 'visible',
     },
 });

@@ -25,7 +25,7 @@ export default class Settings extends Component<Props> {
     render() {
         return (
             <View style={styles.container}>
-                <StatusBar barStyle='dark-content' />
+                <StatusBar barStyle='light-content' />
                 <ScrollView
                     contentInset={{bottom: 80}}
                     refreshControl={
