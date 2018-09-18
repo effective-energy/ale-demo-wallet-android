@@ -50,7 +50,7 @@ export default @inject("walletsStore") @observer class Wallets extends Component
     }
 
     sendMoney(e) {
-
+        this.props.navigation.navigate('SendMoney', { walletAddress: e });
     }
 
     openWalletDetailsScreen(walletData) {

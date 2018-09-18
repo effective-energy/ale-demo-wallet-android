@@ -13,7 +13,7 @@ export default class Pageloader extends React.Component {
                 style={[styles.loading, this.props.isDark && styles.darkLoading]}
             >
                 <StatusBar
-                    barStyle={this.props.isDark === true ? 'light-content' : 'dark-content'}
+                    barStyle={'light-content'}
                 />
                 <ActivityIndicator
                     size="large"
