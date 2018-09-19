@@ -118,17 +118,10 @@ const styles = StyleSheet.create({
         marginTop: 20,
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        shadowOpacity: 0.5,
-        shadowRadius: 50,
-        shadowColor: '#535968',
-        shadowOffset: {
-            height: 20,
-            width: 20
-        }
+        justifyContent: 'space-between'
     },
     rowFront: {
-        backgroundColor: '#E8EBEE',
+        backgroundColor: '#FFFFFF',
         height: 'auto',
         padding: 15,
         borderRadius: 5,
