@@ -15,6 +15,7 @@ import Notifications from './src/components/Notifications';
 import Settings from './src/components/Settings';
 import RequestMoney from './src/components/RequestMoney';
 import SendMoney from './src/components/SendMoney';
+import WalletDetails from './src/components/WalletDetails';
 
 const transitionConfig = () => {
     return {
@@ -35,6 +36,7 @@ const RootStack = createStackNavigator({
     Settings: { screen: Settings },
     RequestMoney: { screen: RequestMoney },
     SendMoney: { screen: SendMoney },
+    WalletDetails: { screen: WalletDetails },
 }, {
     initialRouteName: 'Initial',
     transitionConfig,

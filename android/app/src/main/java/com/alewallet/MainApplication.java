@@ -3,6 +3,7 @@ package com.alewallet;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import im.shimo.react.prompt.RNPromptPackage;
 import com.horcrux.svg.SvgPackage;
 import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +26,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNPromptPackage(),
             new SvgPackage(),
             new RNFetchBlobPackage()
       );

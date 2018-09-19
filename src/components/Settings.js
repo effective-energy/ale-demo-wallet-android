@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, StatusBar, ScrollView, RefreshControl, Text, Dimensions, ListView, Alert, Switch, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, StatusBar, ScrollView, RefreshControl, Text, Dimensions, ListView, Alert, Switch, TouchableOpacity, Linking } from 'react-native';
 import { CachedImage } from "react-native-img-cache";
 import ls from 'react-native-local-storage';
 
@@ -45,12 +45,22 @@ export default class Settings extends Component<Props> {
         });
     }
 
+    openInApp(url, social) {
+        if (social === 'twitter') {
+            return Linking.openURL('https://www.twitter.com/alehub_io');
+        } else if (social === 'telegram') {
+            return Linking.openURL('https://www.t.me/alehub');
+        } else if (social === 'facebook') {
+            return Linking.openURL('https://www.facebook.com/alehub.io');
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <StatusBar barStyle='light-content' />
                  <ScrollView
-                    contentInset={{bottom: 80}}
+                    contentInset={{bottom: 120}}
                 >
                     <View
                         style={[styles.listView, {marginTop: 40}]}
@@ -77,6 +87,171 @@ export default class Settings extends Component<Props> {
                             trackColor="#cccccc"
                             onValueChange={this.toggleSwitch.bind(this)}
                         />
+                    </View>
+
+                    <TouchableOpacity
+                        style={styles.listView}
+                    >
+                        <View
+                            style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+                        >
+                            <View
+                                style={{width: 30, height: 30, backgroundColor: '#4CAF50', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                            >
+                                <CachedImage
+                                    source={require('../assets/images/icons/globe.png')}
+                                    style={{width: 20, height: 20}}
+                                />
+                            </View>
+                            <Text
+                                style={{fontSize: 18, color: '#34343e', marginLeft: 10}}
+                            >
+                                Language
+                            </Text>
+                        </View>
+                        <CachedImage
+                            source={require('../assets/images/icons/arrow-right.png')}
+                            style={{width: 15, height: 15}}
+                            resizeMode='contain'
+                        />
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.listView}
+                    >
+                        <View
+                            style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+                        >
+                            <View
+                                style={{width: 30, height: 30, backgroundColor: '#F44336', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                            >
+                                <CachedImage
+                                    source={require('../assets/images/icons/password.png')}
+                                    style={{width: 20, height: 20}}
+                                />
+                            </View>
+                            <Text
+                                style={{fontSize: 18, color: '#34343e', marginLeft: 10}}
+                            >
+                                Password
+                            </Text>
+                        </View>
+                        <CachedImage
+                            source={require('../assets/images/icons/arrow-right.png')}
+                            style={{width: 15, height: 15}}
+                            resizeMode='contain'
+                        />
+                    </TouchableOpacity>
+
+                    <View style={{ marginTop: 40 }}>
+                        <View style={{ marginLeft: 20, marginBottom: 10 }}>
+                            <Text style={{ fontSize: 16, color: '#666666' }}>{'Join the community'.toUpperCase()}</Text>
+                        </View>
+                        <TouchableOpacity
+                            onPress={() => this.openInApp('alehub_io', 'twitter')}
+                            style={styles.listView}
+                        >
+                            <View
+                                style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+                            >
+                                <View
+                                    style={{width: 30, height: 30, backgroundColor: '#00ACED', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                                >
+                                    <CachedImage
+                                        source={require('../assets/images/icons/twitter.png')}
+                                        style={{width: 20, height: 20}}
+                                    />
+                                </View>
+                                <Text
+                                    style={{fontSize: 18, color: '#34343e', marginLeft: 10}}
+                                >
+                                    Twitter
+                                </Text>
+                            </View>
+                            <CachedImage
+                                source={require('../assets/images/icons/arrow-right.png')}
+                                style={{width: 15, height: 15}}
+                                resizeMode='contain'
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => this.openInApp('alehub', 'telegram')}
+                            style={styles.listView}
+                        >
+                            <View
+                                style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+                            >
+                                <View
+                                    style={{width: 30, height: 30, backgroundColor: '#0088CC', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                                >
+                                    <CachedImage
+                                        source={require('../assets/images/icons/telegram.png')}
+                                        style={{width: 20, height: 20}}
+                                    />
+                                </View>
+                                <Text
+                                    style={{fontSize: 18, color: '#34343e', marginLeft: 10}}
+                                >
+                                    Telegram
+                                </Text>
+                            </View>
+                            <CachedImage
+                                source={require('../assets/images/icons/arrow-right.png')}
+                                style={{width: 15, height: 15}}
+                                resizeMode='contain'
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => this.openInApp('alehub.io', 'facebook')}
+                            style={styles.listView}
+                        >
+                            <View
+                                style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+                            >
+                                <View
+                                    style={{width: 30, height: 30, backgroundColor: '#3B5998', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                                >
+                                    <CachedImage
+                                        source={require('../assets/images/icons/facebook.png')}
+                                        style={{width: 20, height: 20}}
+                                    />
+                                </View>
+                                <Text
+                                    style={{fontSize: 18, color: '#34343e', marginLeft: 10}}
+                                >
+                                    Facebook
+                                </Text>
+                            </View>
+                            <CachedImage
+                                source={require('../assets/images/icons/arrow-right.png')}
+                                style={{width: 15, height: 15}}
+                                resizeMode='contain'
+                            />
+                        </TouchableOpacity>
+                    </View>
+
+                    <View style={{ marginTop: 40 }}>
+                        <TouchableOpacity
+                            style={styles.listView}
+                        >
+                            <View
+                                style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
+                            >
+                                <View
+                                    style={{width: 30, height: 30, backgroundColor: '#E91E63', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}
+                                >
+                                    <CachedImage
+                                        source={require('../assets/images/icons/share.png')}
+                                        style={{width: 15, height: 15}}
+                                    />
+                                </View>
+                                <Text
+                                    style={{fontSize: 18, color: '#34343e', marginLeft: 10}}
+                                >
+                                    Share With Friends
+                                </Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
 
                     <View style={{ marginTop: 40, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

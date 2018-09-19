@@ -54,7 +54,7 @@ export default @inject("walletsStore") @observer class Wallets extends Component
     }
 
     openWalletDetailsScreen(walletData) {
-
+        this.props.navigation.navigate('WalletDetails', { walletData: walletData });
     }
 
     createNewWallet() {

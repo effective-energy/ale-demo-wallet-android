@@ -4254,6 +4254,10 @@ react-native-local-storage@^1.5.2:
   version "1.5.2"
   resolved "https://registry.yarnpkg.com/react-native-local-storage/-/react-native-local-storage-1.5.2.tgz#82d4d76549ab21d6529aec7b3d42a2dcd41a9993"
 
+react-native-prompt-android@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/react-native-prompt-android/-/react-native-prompt-android-0.3.3.tgz#d55859fb767b23ec259f9530e4698ba65eb35758"
+
 react-native-qrcode-svg@^5.1.1:
   version "5.1.1"
   resolved "https://registry.yarnpkg.com/react-native-qrcode-svg/-/react-native-qrcode-svg-5.1.1.tgz#f7dc136cb9de2b7b488a51e27048f6bb3c1ed94c"
