@@ -84,7 +84,7 @@ export default @inject("notificationsStore") @observer class Notifications exten
             <View style={styles.container}>
                 <StatusBar barStyle='light-content' />
                 <ScrollView
-                    contentInset={{bottom: 80}}
+                    contentContainerStyle={{paddingBottom: 80}}
                     refreshControl={
                         <RefreshControl
                             onRefresh={() => this.props.notificationsStore.refreshNotifications()}

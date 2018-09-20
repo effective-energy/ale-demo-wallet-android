@@ -65,7 +65,7 @@ export default @inject("transactionsStore", "walletsStore") @observer class Hist
             <View style={styles.container}>
                 <StatusBar barStyle='light-content' />
                 <ScrollView
-                    contentInset={{bottom: 80}}
+                    contentContainerStyle={{paddingBottom: 80}}
                     refreshControl={
                         <RefreshControl
                             onRefresh={() => this.props.transactionsStore.refreshTransactions()}

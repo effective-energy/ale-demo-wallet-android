@@ -116,6 +116,7 @@ export default @inject("userStore") @observer class Login extends Component<Prop
                         <CachedImage
                             source={require('../assets/images/icons/login.png')}
                             style={styles.loginIcon}
+                            resizeMode='contain'
                         />
                         <Text style={styles.loginText}>Login to wallet</Text>
                     </TouchableOpacity>

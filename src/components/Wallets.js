@@ -81,8 +81,7 @@ export default @inject("walletsStore") @observer class Wallets extends Component
                     barStyle='light-content'
                 />
                 <ScrollView
-                    contentInset={{bottom: 80}}
-                    automaticallyAdjustContentInsets={false}
+                    contentContainerStyle={{paddingBottom: 80}}
                     refreshControl={
                         <RefreshControl
                             onRefresh={this.refreshWallets.bind(this)}

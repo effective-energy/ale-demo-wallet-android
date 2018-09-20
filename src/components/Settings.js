@@ -60,7 +60,7 @@ export default class Settings extends Component<Props> {
             <View style={styles.container}>
                 <StatusBar barStyle='light-content' />
                  <ScrollView
-                    contentInset={{bottom: 120}}
+                    contentContainerStyle={{paddingBottom: 80}}
                 >
                     <View
                         style={[styles.listView, {marginTop: 40}]}

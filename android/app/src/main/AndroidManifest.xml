@@ -2,6 +2,7 @@
     package="com.alewallet">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
     <application
@@ -14,10 +15,11 @@
         android:name=".MainActivity"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize"
-        android:windowSoftInputMode="adjustResize">
+        android:windowSoftInputMode="adjustPan">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
+     <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
