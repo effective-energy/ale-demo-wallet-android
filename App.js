@@ -19,6 +19,8 @@ import SendMoney from './src/components/SendMoney';
 import WalletDetails from './src/components/WalletDetails';
 import NewWallet from './src/components/NewWallet';
 import TwoFactorAuth from './src/components/TwoFactorAuth';
+import SuccessPayment from './src/components/SuccessPayment';
+import TwoFactorLogin from './src/components/TwoFactorLogin';
 
 const transitionConfig = () => {
     return {
@@ -42,6 +44,8 @@ const RootStack = createStackNavigator({
     WalletDetails: { screen: WalletDetails },
     NewWallet: { screen: NewWallet },
     TwoFactorAuth: { screen: TwoFactorAuth },
+    SuccessPayment: { screen: SuccessPayment },
+    TwoFactorLogin: { screen: TwoFactorLogin },
 }, {
     initialRouteName: 'Initial',
     transitionConfig,

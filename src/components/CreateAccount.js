@@ -94,6 +94,7 @@ export default class CreateAccount extends Component<Props> {
                     <CachedImage
                         source={require('../assets/images/icons/login.png')}
                         style={styles.buttonBlock_icon}
+                        resizeMode='contain'
                     />
                     <Text style={styles.buttonBlock_text}>Log in to account</Text>
                 </TouchableOpacity>

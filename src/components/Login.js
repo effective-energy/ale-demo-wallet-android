@@ -38,12 +38,12 @@ export default @inject("userStore") @observer class Login extends Component<Prop
         this.props.navigation.navigate('Wallets');
     });
 
-    // watcher = when(() => this.props.userStore.isTwoFactor === true, () => {
-    //     this.props.navigation.navigate('TwoFactorLogin', {
-    //         email: this.state.userEmail,
-    //         password: this.state.userPassword
-    //     });
-    // });
+    watcher = when(() => this.props.userStore.isTwoFactor === true, () => {
+        this.props.navigation.navigate('TwoFactorLogin', {
+            email: this.state.userEmail,
+            password: this.state.userPassword
+        });
+    });
 
     createAccount() {
         this.props.navigation.navigate('CreateAccount');

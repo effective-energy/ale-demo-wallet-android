@@ -72,7 +72,7 @@ export default @inject("walletsStore") @observer class WalletDetails extends Com
     }
 
     receiveMoney(address) {
-        this.props.navigation.navigate('RequestMoney', { walletAddress: address });
+        this.props.navigation.navigate('ReceiveMoney', { walletAddress: address });
     }
 
     editWalletName() {

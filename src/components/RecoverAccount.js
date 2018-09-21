@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, StatusBar, TouchableOpacity, TextInput, Dimensions, Alert, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Button, StatusBar, TouchableOpacity, TextInput, Dimensions, Alert, ScrollView, Keyboard } from 'react-native';
 import { CachedImage } from "react-native-img-cache";
+import Spinner from './layouts/Spinner';
 
 function wp (percentage) {
     const value = (percentage * viewportWidth) / 100;
@@ -10,8 +11,20 @@ function wp (percentage) {
 const { width: viewportWidth } = Dimensions.get('window');
 let screenWidth = wp(80);
 
+function validateEmail(email) {
+    let re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
 type Props = {};
 export default class RecoverAccount extends Component<Props> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            recoverEmail: '',
+            isShowSpinner: false,
+        };
+    }
 
     static navigationOptions = ({navigation}) => {
         return {
@@ -31,6 +44,43 @@ export default class RecoverAccount extends Component<Props> {
         this.props.navigation.navigate('Login');
     }
 
+    sendLink() {
+        if (this.state.recoverEmail === '') {
+            return Alert.alert('Enter your E-mail');
+        }
+        if (validateEmail(this.state.recoverEmail)) {
+            Keyboard.dismiss();
+            this.setState({
+                isShowSpinner: true,
+            });
+            fetch('https://ale-demo-4550.nodechef.com/users/recovery', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    email: this.state.recoverEmail.toLowerCase()
+                }),
+            })
+            .then((response) => response.json())
+            .then((responseJson) => {
+                this.setState({
+                    isShowSpinner: false,
+                });
+                Alert.alert(responseJson.message);
+            })
+            .catch((error) => {
+                this.setState({
+                    isShowSpinner: false,
+                });
+                Alert.alert(error);
+            });
+        } else {
+            Alert.alert('Enter valid E-mail');
+        }
+    }
+
     render() {
         return (
             <ScrollView
@@ -40,14 +90,20 @@ export default class RecoverAccount extends Component<Props> {
                 <StatusBar
                     barStyle='light-content'
                 />
+                { this.state.isShowSpinner === true && <Spinner />}
                 <View>
                     <TextInput
                         placeholder="Enter your email"
                         placeholderTextColor="#455578"
                         style={styles.textInput}
+                        onChangeText={(recoverEmail) => this.setState({recoverEmail})}
+                        value={this.state.recoverEmail}
+                        returnKeyType={"go"}
+                        onSubmitEditing={() => { this.sendLink() }}
                     />
                     <TouchableOpacity
                         style={styles.buttonBlock}
+                        onPress={this.sendLink.bind(this)}
                     >
                         <CachedImage
                             source={require('../assets/images/icons/mail.png')}
@@ -63,6 +119,7 @@ export default class RecoverAccount extends Component<Props> {
                     <CachedImage
                         source={require('../assets/images/icons/login.png')}
                         style={styles.buttonBlock_icon}
+                        resizeMode='contain'
                     />
                     <Text style={styles.buttonBlock_text}>Log in to account</Text>
                 </TouchableOpacity>
