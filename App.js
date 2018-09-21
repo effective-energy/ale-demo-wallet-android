@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View, YellowBox } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+YellowBox.ignoreWarnings(['Warning: ']);
 
 import { Provider } from "mobx-react";
 import stores from "./src/store";
@@ -42,12 +43,11 @@ const RootStack = createStackNavigator({
     transitionConfig,
 });
 
-type Props = {};
-export default class App extends Component<Props> {
+export default class App extends Component {
     render() {
         return (
             <Provider {...stores}>
-                <RootStack/>
+                <RootStack />
             </Provider>
         );
     }

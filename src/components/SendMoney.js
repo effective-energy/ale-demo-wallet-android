@@ -130,6 +130,8 @@ export default class SendMoney extends Component<Props> {
                             style={styles.text_input}
                             onChangeText={(destinationAddress) => this.setState({destinationAddress})}
                             value={this.state.destinationAddress}
+                            returnKeyType={"go"}
+                            onSubmitEditing={() => { this.sendMoney() }}
                         />
                     </View>
 
