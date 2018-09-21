@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions, StatusBar, TextInput, Alert, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, StatusBar, TextInput, Alert, TouchableOpacity, TouchableHighlight, Keyboard } from 'react-native';
 import ls from 'react-native-local-storage';
 import { CachedImage } from "react-native-img-cache";
 import Spinner from './layouts/Spinner';
@@ -52,7 +52,9 @@ export default class SendMoney extends Component<Props> {
     }
 
     sendMoney() {
-        if (this.state.amount === '') {
+        Keyboard.dismiss();
+        
+        if (this.state.amount === '' || Number(this.state.amount) === 0) {
             return Alert.alert('Enter amount');
         }
 

@@ -45,8 +45,8 @@ export default @inject("walletsStore") @observer class Wallets extends Component
         this.props.navigation.navigate(e);
     }
 
-    requestMoney(e) {
-        this.props.navigation.navigate('RequestMoney', { walletAddress: e });
+    receiveMoney(e) {
+        this.props.navigation.navigate('ReceiveMoney', { walletAddress: e });
     }
 
     sendMoney(e) {
@@ -58,7 +58,7 @@ export default @inject("walletsStore") @observer class Wallets extends Component
     }
 
     createNewWallet() {
-
+        this.props.navigation.navigate('NewWallet');
     }
 
     refreshWallets() {
@@ -94,7 +94,7 @@ export default @inject("walletsStore") @observer class Wallets extends Component
                     <WalletsSlider
                         openWalletDetailsScreen={this.openWalletDetailsScreen.bind(this)}
                         walletsList={this.props.walletsStore.walletsList}
-                        requestMoney={this.requestMoney.bind(this)}
+                        receiveMoney={this.receiveMoney.bind(this)}
                         sendMoney={this.sendMoney.bind(this)}
                     />
                     <NewWalletBlock

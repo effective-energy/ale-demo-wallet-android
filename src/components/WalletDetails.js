@@ -5,6 +5,7 @@ import { observer, inject } from "mobx-react";
 import { when } from "mobx";
 import { CachedImage } from "react-native-img-cache";
 import Spinner from './layouts/Spinner';
+import AlertAndroid from 'react-native-prompt-android'
 
 import BottomNavigator from './layouts/BottomNavigator';
 
@@ -75,21 +76,21 @@ export default @inject("walletsStore") @observer class WalletDetails extends Com
     }
 
     editWalletName() {
-        // AlertAndroid(
-        //     'Change wallet name',
-        //     'Enter new name for wallet',
-        //     [{
-        //         text: 'Cancel',
-        //         style: 'cancel',
-        //     }, {
-        //         text: 'OK',
-        //         onPress: (newWalletName) => this.renameWallet(newWalletName),
-        //     }],
-        //     {
-        //         type: 'plain-text',
-        //         defaultValue: this.state.walletName,
-        //     }
-        // );
+        AlertAndroid(
+            'Change wallet name',
+            'Enter new name for wallet',
+            [{
+                text: 'Cancel',
+                style: 'cancel',
+            }, {
+                text: 'OK',
+                onPress: (newWalletName) => this.renameWallet(newWalletName),
+            }],
+            {
+                type: 'plain-text',
+                defaultValue: this.state.walletName,
+            }
+        );
     }
 
     renameWallet(newWalletName) {
@@ -134,20 +135,20 @@ export default @inject("walletsStore") @observer class WalletDetails extends Com
     }
 
     deleteWallet() {
-        // AlertAndroid(
-        //     'Delete wallet',
-        //     'Type wallet name to confirm deletion',
-        //     [{
-        //         text: 'Cancel',
-        //         style: 'cancel',
-        //     }, {
-        //         text: 'Confirm',
-        //         onPress: walletName => this.confirmDeleteWallet(walletName)
-        //     }],
-        //   {
-        //     type: 'plain-text'
-        //   }
-        // );
+        AlertAndroid(
+            'Delete wallet',
+            'Type wallet name to confirm deletion',
+            [{
+                text: 'Cancel',
+                style: 'cancel',
+            }, {
+                text: 'Confirm',
+                onPress: walletName => this.confirmDeleteWallet(walletName)
+            }],
+          {
+            type: 'plain-text'
+          }
+        );
     }
 
     confirmDeleteWallet(walletName) {

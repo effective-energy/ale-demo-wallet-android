@@ -10,7 +10,7 @@ function wp (percentage) {
 const { width: viewportWidth } = Dimensions.get('window');
 let screenWidth = wp(80);
 
-export default class RequestMoney extends Component {
+export default class ReceiveMoney extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -20,7 +20,7 @@ export default class RequestMoney extends Component {
 
     static navigationOptions = ({navigation}) => {
         return {
-            title: 'Request money',
+            title: 'Receive money',
             headerTitleStyle: {
                 color: '#000000'
             },

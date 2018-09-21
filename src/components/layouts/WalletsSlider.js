@@ -62,13 +62,13 @@ export default class WalletsSlider extends React.Component {
 
                     <TouchableOpacity
                         style={{ backgroundColor: '#FFBB00', borderRadius: 6, display: 'flex', flexDirection: 'row', justifyContent: 'center', padding: 5, alignItems: 'center', width: wp(32) }}
-                        onPress={e => this.props.requestMoney(item.address)}
+                        onPress={e => this.props.receiveMoney(item.address)}
                     >
                         <CachedImage
                              style={{width: 15, height: 15, marginRight: 5 }}
-                            source={require('../../assets/images/icons/request.png')}
+                            source={require('../../assets/images/icons/receive.png')}
                         />
-                        <Text style={{ color: '#000000', fontSize: 16 }}>Request</Text>
+                        <Text style={{ color: '#000000', fontSize: 16 }}>Receive</Text>
                     </TouchableOpacity>
                 </View>
             </View>

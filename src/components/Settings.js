@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, StatusBar, ScrollView, RefreshControl, Text, Dimensions, ListView, Alert, Switch, TouchableOpacity, Linking } from 'react-native';
+import { View, StyleSheet, StatusBar, ScrollView, RefreshControl, Text, Dimensions, ListView, Alert, Switch, TouchableOpacity, Linking, Share } from 'react-native';
 import { CachedImage } from "react-native-img-cache";
 import ls from 'react-native-local-storage';
+import Config from '../config';
+import Pageloader from './layouts/Pageloader';
 
 import BottomNavigator from './layouts/BottomNavigator';
 
@@ -18,6 +20,12 @@ export default class Settings extends Component<Props> {
         super(props);
         this.state = {
             isTwoAuthActive: false,
+            isLoaderPage: true,
+            fullName: '',
+            userEmail: '',
+            userAvatar: '',
+            isOpenAvatarModal: false,
+            isShowSpinner: false,
         };
     }
 
@@ -28,6 +36,47 @@ export default class Settings extends Component<Props> {
             gesturesEnabled: false,
         };
     };
+
+    componentDidMount() {
+        this.getUserData();
+    }
+
+    async getUserData() {
+        const userToken = await ls.get('userToken');
+        if (!userToken) {
+            throw userToken
+        }
+
+        const params = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': userToken
+            }
+        }
+
+        const response = await fetch(`${Config.SERVER_URL}/users/get-user-data`, params);
+        if (!response) {
+            throw response
+        }
+
+        const responseJson = await response.json();
+
+        await this.setStateAsync({
+            isTwoAuthActive: responseJson.isTwoAuth,
+            isLoaderPage: false,
+            fullName: responseJson.name,
+            userEmail: responseJson.email,
+            userAvatar: responseJson.avatar,
+        });
+    }
+
+    setStateAsync(state) {
+        return new Promise((resolve) => {
+            this.setState(state, resolve);
+        });
+    }
 
     changePage(e) {
         this.props.navigation.navigate(e);
@@ -40,9 +89,20 @@ export default class Settings extends Component<Props> {
     }
 
     toggleSwitch() {
-        this.setState({
-           isTwoAuthActive: !this.state.isTwoAuthActive, 
-        });
+        let type = this.state.isTwoAuthActive ? 'disable' : 'enable';
+        return this.props.navigation.navigate('TwoFactorAuth', { type: type});
+    }
+
+    shareApp() {
+        Share.share({
+            message: 'Download ALE Wallet - https://alehub.io/',
+            url: 'https://alehub.io/',
+        }, {
+            dialogTitle: 'Share',
+            excludedActivityTypes: [
+              'com.apple.UIKit.activity.PostToTwitter'
+            ]
+        })
     }
 
     openInApp(url, social) {
@@ -56,12 +116,35 @@ export default class Settings extends Component<Props> {
     }
 
     render() {
+        if (this.state.isLoaderPage) {
+            return (<Pageloader title="Loading user data" />);
+        }
         return (
             <View style={styles.container}>
                 <StatusBar barStyle='light-content' />
                  <ScrollView
                     contentContainerStyle={{paddingBottom: 80}}
                 >
+                    <View
+                        style={{ marginTop: 1, backgroundColor: '#FFFFFF', width: wp(100), padding: 15, display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}
+                    >
+                        <View style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+                            { this.state.userAvatar === '' ? <View style={{width: 60, height: 60, borderRadius: 30, backgroundColor: '#CCCCCC', alignItems: 'center', display: 'flex', justifyContent: 'center', marginBottom: 10}}>
+                                <Text style={{ color: '#FFFFFF', textAlign: 'center', fontSize: 30, fontWeight: 'bold' }}>{this.state.fullName.substr(0, 2).toUpperCase()}</Text>
+                            </View> :
+                            <View style={{width: 60, height: 60, borderRadius: 30}}>
+                                <CachedImage
+                                    source={{uri: `${Config.SERVER_URL}/${this.state.userAvatar}`}}
+                                    style={{ width: 60, height: 60, borderRadius: 30, resizeMode: 'cover', marginBottom: 10 }}
+                                />
+                            </View>}
+                            <View style={{marginTop: 5}}>
+                                <Text style={{ fontSize: 24, textAlign: 'center', color: '#34343e' }}>{this.state.fullName}</Text>
+                                <Text style={{ fontSize: 18, textAlign: 'center', color: '#34343e' }}>{this.state.userEmail}</Text>
+                            </View>
+                        </View>
+                    </View>
+
                     <View
                         style={[styles.listView, {marginTop: 40}]}
                     >
@@ -232,6 +315,7 @@ export default class Settings extends Component<Props> {
 
                     <View style={{ marginTop: 40 }}>
                         <TouchableOpacity
+                            onPress={this.shareApp.bind(this)}
                             style={styles.listView}
                         >
                             <View
