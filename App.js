@@ -23,6 +23,9 @@ import SuccessPayment from './src/components/SuccessPayment';
 import TwoFactorLogin from './src/components/TwoFactorLogin';
 import ChangePassword from './src/components/ChangePassword';
 import RestoreWallet from './src/components/RestoreWallet';
+import Attention from './src/components/Attention';
+import RecoveryPhrase from './src/components/RecoveryPhrase';
+import ConfirmMnemonic from './src/components/ConfirmMnemonic';
 
 const transitionConfig = () => {
     return {
@@ -50,6 +53,9 @@ const RootStack = createStackNavigator({
     TwoFactorLogin: { screen: TwoFactorLogin },
     ChangePassword: { screen: ChangePassword },
     RestoreWallet: { screen: RestoreWallet },
+    Attention: { screen: Attention },
+    RecoveryPhrase: { screen: RecoveryPhrase },
+    ConfirmMnemonic: { screen: ConfirmMnemonic },
 }, {
     initialRouteName: 'Initial',
     transitionConfig,

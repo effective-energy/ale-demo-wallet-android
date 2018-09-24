@@ -67,11 +67,7 @@ export default @inject("walletsStore") @observer class Wallets extends Component
 
     render() {
         if (this.props.walletsStore.isLoaderPage) {
-            return (
-                <Pageloader
-                    title="Loading wallets..."
-                    isDark={true}
-                />);
+            return (<Pageloader title="Loading wallets..." isDark={true} />);
         }
         return (
             <View
