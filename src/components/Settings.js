@@ -115,6 +115,10 @@ export default class Settings extends Component<Props> {
         }
     }
 
+    changePassword() {
+        this.props.navigation.navigate('ChangePassword');
+    }
+
     render() {
         if (this.state.isLoaderPage) {
             return (<Pageloader title="Loading user data" />);
@@ -173,33 +177,7 @@ export default class Settings extends Component<Props> {
                     </View>
 
                     <TouchableOpacity
-                        style={styles.listView}
-                    >
-                        <View
-                            style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}
-                        >
-                            <View
-                                style={{width: 30, height: 30, backgroundColor: '#4CAF50', borderRadius: 4, display: 'flex', alignItems: 'center', justifyContent: 'center'}}
-                            >
-                                <CachedImage
-                                    source={require('../assets/images/icons/globe.png')}
-                                    style={{width: 20, height: 20}}
-                                />
-                            </View>
-                            <Text
-                                style={{fontSize: 18, color: '#34343e', marginLeft: 10}}
-                            >
-                                Language
-                            </Text>
-                        </View>
-                        <CachedImage
-                            source={require('../assets/images/icons/arrow-right.png')}
-                            style={{width: 15, height: 15}}
-                            resizeMode='contain'
-                        />
-                    </TouchableOpacity>
-
-                    <TouchableOpacity
+                        onPress={this.changePassword.bind(this)}
                         style={styles.listView}
                     >
                         <View

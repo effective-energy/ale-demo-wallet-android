@@ -9,7 +9,7 @@ function wp (percentage) {
 const { width: viewportWidth } = Dimensions.get('window');
 
 type Props = {};
-export default class NewWalletScreen extends Component<Props> {
+export default class NewWallet extends Component<Props> {
     constructor(props) {
         super(props);
         this.state = {
