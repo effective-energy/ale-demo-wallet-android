@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, StatusBar, TouchableOpacity, TextInput, Dimensions, Alert, ScrollView } from 'react-native';
 import { CachedImage } from "react-native-img-cache";
+import Spinner from './layouts/Spinner';
+import { observer, inject } from "mobx-react";
+import { when } from "mobx";
+
+import Config from '../config';
 
 function wp (percentage) {
     const value = (percentage * viewportWidth) / 100;
@@ -10,8 +15,22 @@ function wp (percentage) {
 const { width: viewportWidth } = Dimensions.get('window');
 let screenWidth = wp(80);
 
+function validateEmail(email)  {
+    let re = /\S+@\S+\.\S+/;
+    return re.test(email);
+}
+
 type Props = {};
-export default class CreateAccount extends Component<Props> {
+export default @inject("userStore") @observer class CreateAccount extends Component<Props> {
+    constructor(props) {
+        super(props);
+        this.state = {
+            fullName: '',
+            email: '',
+            password: '',
+            repeatPassword: '',
+        };
+    }
 
     static navigationOptions = ({navigation}) => {
         return {
@@ -27,8 +46,46 @@ export default class CreateAccount extends Component<Props> {
         };
     };
 
+    componentDidMount() {
+        this.setState({
+            fullName: '',
+            email: '',
+            password: '',
+            repeatPassword: '',
+        });
+    }
+
     backToLoginPage() {
         this.props.navigation.navigate('Login');
+    }
+
+    watcher = when(() => this.props.userStore.isSuccessCreateAccount === true, () => {
+        this.props.navigation.navigate('Login');
+    });
+
+    async createAccount() {
+        try {
+            if (this.state.fullName === '') {
+                return Alert.alert('Enter your name');
+            }
+            if (this.state.email === '' || !validateEmail(this.state.email)) {
+                return Alert.alert('Enter valid E-mail');
+            }
+            if (this.state.password.length < 8) {
+                return Alert.alert('Minimum password length is 8 characters');
+            }
+            if (this.state.repeatPassword !== this.state.password) {
+                return Alert.alert('Passwords do not match');
+            }
+
+            this.props.userStore.createAccount({
+                email: this.state.email.toLowerCase(),
+                name: this.state.fullName,
+                password: this.state.password
+            });
+        } catch (error) {
+            Alert.alert(error)
+        }
     }
 
     render() {
@@ -38,11 +95,14 @@ export default class CreateAccount extends Component<Props> {
                 keyboardShouldPersistTaps='handled'
             >
                 <StatusBar barStyle='light-content' />
+                { this.props.userStore.isLoader === true && <Spinner />}
                 <View>
                     <TextInput
                         placeholder="Full name"
                         placeholderTextColor="#455578"
                         style={styles.textInput}
+                        onChangeText={(fullName) => this.setState({fullName})}
+                        value={this.state.fullName}
                         returnKeyType={"next"}
                         onSubmitEditing={() => { this.emailTextInput.focus(); }}
                     />
@@ -50,6 +110,8 @@ export default class CreateAccount extends Component<Props> {
                         placeholder="E-mail"
                         placeholderTextColor="#455578"
                         style={styles.textInput}
+                        onChangeText={(email) => this.setState({email})}
+                        value={this.state.email}
                         ref={(input) => { this.emailTextInput = input; }}
                         returnKeyType={"next"}
                         onSubmitEditing={() => { this.passwordTextInput.focus(); }}
@@ -59,6 +121,8 @@ export default class CreateAccount extends Component<Props> {
                         placeholder="Password"
                         placeholderTextColor="#455578"
                         style={styles.textInput}
+                        onChangeText={(password) => this.setState({password})}
+                        value={this.state.password}
                         ref={(input) => { this.passwordTextInput = input; }}
                         returnKeyType={"next"}
                         onSubmitEditing={() => { this.confirmPasswordTextInput.focus(); }}
@@ -68,11 +132,14 @@ export default class CreateAccount extends Component<Props> {
                         placeholder="Repeat password"
                         placeholderTextColor="#455578"
                         style={styles.textInput}
+                        onChangeText={(repeatPassword) => this.setState({repeatPassword})}
+                        value={this.state.repeatPassword}
                         ref={(input) => { this.confirmPasswordTextInput = input; }}
                         returnKeyType={"go"}
                         onSubmitEditing={() => { this.createAccount() }}
                     />
                     <TouchableOpacity
+                        onPress={this.createAccount.bind(this)}
                         style={styles.buttonBlock}
                     >
                         <CachedImage

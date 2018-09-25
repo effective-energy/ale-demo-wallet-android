@@ -14,6 +14,7 @@ export default class UserStore {
     @observable isUpdatePassword = false;
     @observable isTwoFactor = false;
     @observable isIncorrectPassword = false;
+    @observable isSuccessCreateAccount = false;
 
     @action async login(data: Object) {
     	try {
@@ -58,7 +59,7 @@ export default class UserStore {
     	}
     }
 
-    @action async createAccount() {
+    @action async createAccount(data: Object) {
         try {
             this.isSuccessCreateAccount = false;
             this.isLoader = true;
@@ -85,8 +86,10 @@ export default class UserStore {
             if (responseJson.message !== 'User already exist!') {
                 Alert.alert(responseJson.message);
                 this.isLoader = false;
-                return this.isSuccessCreateAccount = true;
+                this.isSuccessCreateAccount = true;
+                return this.isSuccessCreateAccount = false;
             } else {
+                this.isLoader = false;
                 Alert.alert(responseJson.message);
             }
         } catch (error) {
