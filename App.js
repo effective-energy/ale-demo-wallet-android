@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Platform, StyleSheet, Text, View, YellowBox } from 'react-native';
+import { Platform, StyleSheet, Text, View, YellowBox, NetInfo } from 'react-native';
 import { createStackNavigator } from 'react-navigation';
+import Nointernet from './src/components/layouts/Nointernet';
 YellowBox.ignoreWarnings(['Warning: ']);
 
 import { Provider } from "mobx-react";
@@ -62,7 +63,36 @@ const RootStack = createStackNavigator({
 });
 
 export default class App extends Component {
+    constructor(props: Object) {
+        super(props);
+        this.state = {
+            isConnected: true,
+        };
+    }
+
+    componentDidMount() {
+        NetInfo.isConnected.addEventListener('connectionChange', this.handleConnectivityChange);
+    }
+
+    componentWillUnmount() {
+        NetInfo.isConnected.removeEventListener('connectionChange', this.handleConnectivityChange);
+    }
+    
+    handleConnectivityChange = isConnected => {
+        if (isConnected) {
+            this.setState({ isConnected: true });
+        } else {
+            this.setState({ isConnected: false });
+        }
+    };
+
     render() {
+        if (!this.state.isConnected) {
+            return (
+                <Nointernet />
+            );
+        }
+
         return (
             <Provider {...stores}>
                 <RootStack />

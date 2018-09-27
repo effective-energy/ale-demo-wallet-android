@@ -9,6 +9,7 @@ export default class Initial extends Component<Props> {
 
     static navigationOptions = ({navigation}) => {
         return {
+            gesturesEnabled: false,
             header: null,
         };
     };

@@ -30,6 +30,7 @@ export default @inject("userStore") @observer class Login extends Component<Prop
 
     static navigationOptions = ({navigation}) => {
         return {
+            gesturesEnabled: false,
             header: null,
         };
     };
